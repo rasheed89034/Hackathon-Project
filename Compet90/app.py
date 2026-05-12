@@ -21,15 +21,15 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- 🚀 INITIALIZATION ---
-init_sqlite_db() #
-df, model, index = load_data_from_db(), *build_ai_search(load_data_from_db()) #
+init_sqlite_db()
+df, model, index = load_data_from_db(), *build_ai_search(load_data_from_db())
 
 # --- 🛡️ SIDEBAR ---
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/387/387561.png", width=100) 
     st.title("Neural Knights")
     with st.container():
-        st.markdown("""
+        st.markdown(f"""
         <div class="group-box">
             <h4 style='color: #4db6ac; margin-top:0;'>🛡️ Group Details</h4>
             <p style='font-size: 0.9em;'><b>Project:</b> Smart Doctor Connect AI</p>
@@ -52,7 +52,6 @@ if page == "🏠 Home / Search":
         results = df.iloc[I[0]]
         
         for _, doc in results.iterrows():
-            # FIXED: Removed extra "Dr." prefix
             with st.expander(f"{doc['name']} - {doc['specialization']}"):
                 col_a, col_b = st.columns([2, 1])
                 with col_a:
@@ -60,13 +59,29 @@ if page == "🏠 Home / Search":
                     st.info(get_llm_reasoning(doc['name'], query))
                 with col_b:
                     st.write(f"⭐ **Rating:** {doc['rating']}")
+                    
+                   
                     if doc['status'] == "Available":
                         slot = suggest_optimal_slot(doc['id'])
                         st.success(f"AI Suggests: {slot}")
-                        if st.button("Confirm Booking", key=f"bk_{doc['id']}"):
-                            save_patient_lead("User", "Verified", query, doc['id'])
-                            st.balloons()
-                            st.rerun()
+                        
+                       
+                        with st.form(key=f"book_home_{doc['id']}"):
+                            st.markdown("### 📅 Booking Details")
+                            p_name = st.text_input("Your Full Name")
+                            p_contact = st.text_input("Contact (WhatsApp/Email)")
+                            
+                            if st.form_submit_button("Confirm Booking"):
+                                if p_name and p_contact:
+                                    # Save data to patient_leads table
+                                    save_patient_lead(p_name, p_contact, query, doc['id']) 
+                                    st.balloons()
+                                    st.success(f"Appointment confirmed for {slot}!")
+                                    st.rerun()
+                                else:
+                                    st.warning("Please enter your name and contact info.")
+                    else:
+                        st.warning("Currently Offline")
 
 elif page == "👨‍⚕️ Doctor Availability":
     st.header("👨‍⚕️ Specific Doctor Search & Slots")
@@ -81,7 +96,6 @@ elif page == "👨‍⚕️ Doctor Availability":
                 with st.container(border=True):
                     c1, c2 = st.columns([3, 1])
                     with c1:
-                        # FIXED: Removed extra "Dr." prefix
                         st.subheader(row['name'])
                         st.markdown(f"💼 **{row['specialization']}** | 📍 **{row['location']}**")
                     with c2:
