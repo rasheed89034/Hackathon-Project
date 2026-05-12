@@ -9,14 +9,14 @@ The standout feature of this project is the Phase 04 Agentic Engine. When a doct
 
 # 📂 Modular System Architecture
 The project is built on a clean, scalable 4-Phase architecture:
-Phase 01: Database Foundation
+### Phase 01: Database Foundation
 A robust SQLite3 infrastructure managing over 150 doctor profiles.
 Strict enforcement of a 70-patient daily limit per doctor to ensure quality of care.
-Phase 02: AI Reasoning Engine
+### Phase 02: AI Reasoning Engine
 Advanced NLP for symptom analysis and vector-based matching.
-Phase 03: Smart Scheduling
+### Phase 03: Smart Scheduling
 Logic-driven slot suggestions aimed at reducing patient wait times by up to 60%.
-Phase 04: Data Persistence & Agents
+### Phase 04: Data Persistence & Agents
 Autonomous lead management and persistent data storage for clinical follow-ups.
 
 # 📊 Technical Specifications & Impact
