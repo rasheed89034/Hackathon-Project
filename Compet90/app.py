@@ -33,7 +33,7 @@ with st.sidebar:
         <div class="group-box">
             <h4 style='color: #4db6ac; margin-top:0;'>🛡️ Group Details</h4>
             <p style='font-size: 0.9em;'><b>Project:</b> Smart Doctor Connect AI</p>
-            <p style='font-size: 0.9em;'><b>Lead:</b> Muhammad Bilal</p>
+            <p style='font-size: 0.9em;'><b>Lead:</b> Rasheed Ahmad</p>
             <p style='font-size: 0.9em;'><b>Goal:</b> Healthcare Accessibility via Agentic AI</p>
         </div>
         """, unsafe_allow_html=True)
